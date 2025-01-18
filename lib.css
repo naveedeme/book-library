@@ -1,0 +1,173 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.library {
+    z-index: -10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 50px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.header p {
+    color: white;
+    margin-left: 20px;
+    font-size: 30px;
+}
+
+.shelf {
+    display: flex;
+    gap: 100px;
+    background-color: rgba(240, 46, 170, 0.1);
+    padding: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.book-container {
+    display: flex;
+    width: 100%;
+    min-height: 80%;
+    border-radius: 20px;
+}
+
+.btns-container {
+    display: flex;
+    gap: 20px;
+}
+
+.button-83 {
+  appearance: button;
+  background-color: transparent;
+  background-image: linear-gradient(to bottom, #fff, #f8eedb);
+  border: 0 solid #e5e7eb;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #482307;
+  column-gap: 1rem;
+  cursor: pointer;
+  display: flex;
+  font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 100%;
+  font-weight: 700;
+  line-height: 24px;
+  margin: 0;
+  outline: 2px solid transparent;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  text-transform: none;
+  transition: all .1s cubic-bezier(.4, 0, .2, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  box-shadow: -6px 8px 10px rgba(81,41,10,0.1),0px 2px 2px rgba(81,41,10,0.2);
+}
+
+.button-83:active {
+  background-color: #f3f4f6;
+  box-shadow: -1px 2px 5px rgba(81,41,10,0.15),0px 1px 1px rgba(81,41,10,0.15);
+  transform: translateY(0.125rem);
+}
+
+.button-83:focus {
+  box-shadow: rgba(72, 35, 7, .46) 0 0 0 4px, -6px 8px 10px rgba(81,41,10,0.1), 0px 2px 2px rgba(81,41,10,0.2);
+}
+
+.book {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+}
+
+.back {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    transform: perspective(75em) rotateY(-80deg);
+    border-radius: 30px;
+    background-color: bisque;
+    margin: 15px 0 15px;
+    box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px;
+    
+ }
+
+ .author p {
+    transform: perspective(75em) rotate(90deg);
+    font-size: 20px;
+ }
+
+.pages {
+    width: 100%;
+    height: 15%;
+    background-color: lightcoral;
+    text-align: center;
+    margin: 0;
+    box-sizing: border-box;
+    align-content: center;
+    font-size: 20px;
+}
+
+.title {
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(#8e8906,#ECD078);
+    text-align: center;
+    margin: 0;
+    padding: 25px;
+    box-sizing: border-box;
+    align-content: center;
+    font-size: 20px;    
+}
+
+.author {
+    width: 100%;
+    height: 20%;
+    background-color: rgb(142, 68, 68);
+    text-align: center;
+    margin: 0;
+    box-sizing: border-box;
+    align-content: center;
+    font-size: 20px;
+}
+
+.publish {
+    width: 100%;
+    height: 15%;
+    background-color: rgb(141, 113, 113, 0.8);
+    text-align: center;
+    margin: 0;
+    box-sizing: border-box;
+    align-content: center;
+    font-size: 20px;
+}
+
+.status {
+    color: rgba(242, 234, 239, 0.9);
+    font-weight: 300;
+}
