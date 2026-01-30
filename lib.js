@@ -7,13 +7,22 @@ class Book {
         this.read = read;
     }
 }
-let books = [];
+
+// Load books from localStorage or initialize empty array
+let books = JSON.parse(localStorage.getItem('libraryBooks')) || [];
+
+function saveToLocalStorage() {
+    localStorage.setItem('libraryBooks', JSON.stringify(books));
+}
+
 function addBooks(title, author, pages, publish, read) {
     let book = new Book(title, author, pages, publish, read);
     books.push(book);
+    saveToLocalStorage();
     return books;
 }
- function defaultBooks() {
+
+function defaultBooks() {
     if (books.length === 0) {
         addBooks("My Book", "Naveed", 286, 1989, "Read");
         addBooks("My New Book", "Ahmed", 346, 2012, "Not Read");
@@ -26,119 +35,113 @@ defaultBooks();
 
 
 function displayBooks(books) {
-
-for(let i=0; i<books.length; i++) {
-
-    let container = document.createElement("div");
-    container.classList.add("container");
-
-    let bookContainer = document.createElement("div");
-    bookContainer.classList.add("book-container");
-
-    let book = document.createElement("div");
-    book.classList.add("book");
+    const shelf = document.querySelector(".shelf");
+    shelf.innerHTML = ''; // Clear existing books
     
-    bookContainer.appendChild(book);
-    
-    let pages1 = document.createElement("p");
-    pages1.classList.add("pages");
-    
-    let title1 = document.createElement("p");
-    title1.classList.add("title");
-    
-    let author1 = document.createElement("p");
-    author1.classList.add("author");
-    
-    let publish1 = document.createElement("p");
-    publish1.classList.add("publish");
-    
-    book.appendChild(pages1);
-    book.appendChild(title1);
-    book.appendChild(author1);
-    book.appendChild(publish1);
-    
-    pages1.textContent = `${books[i].pages}`;
-    title1.textContent = `${books[i].title}`;
-    author1.textContent = `${books[i].author}`;
-    publish1.textContent = `${books[i].publish}`;
+    books.forEach((book, index) => {
+        const container = document.createElement("div");
+        container.classList.add("container");
 
-    let statusContainer = document.createElement("div");
-    statusContainer.classList.add("reading-status");
+        const bookContainer = document.createElement("div");
+        bookContainer.classList.add("book-container");
 
-    let statusPara = document.createElement("p");
-    statusPara.classList.add("status");
-    statusPara.textContent = `${books[i].read}`;
+        const bookElement = document.createElement("div");
+        bookElement.classList.add("book");
+        
+        bookContainer.appendChild(bookElement);
+        
+        const pagesElement = document.createElement("p");
+        pagesElement.classList.add("pages");
+        
+        const titleElement = document.createElement("p");
+        titleElement.classList.add("title");
+        
+        const authorElement = document.createElement("p");
+        authorElement.classList.add("author");
+        
+        const publishElement = document.createElement("p");
+        publishElement.classList.add("publish");
+        
+        bookElement.appendChild(pagesElement);
+        bookElement.appendChild(titleElement);
+        bookElement.appendChild(authorElement);
+        bookElement.appendChild(publishElement);
+        
+        pagesElement.textContent = `${book.pages}`;
+        titleElement.textContent = `${book.title}`;
+        authorElement.textContent = `${book.author}`;
+        publishElement.textContent = `${book.publish}`;
 
-    statusContainer.appendChild(statusPara);
+        const statusContainer = document.createElement("div");
+        statusContainer.classList.add("reading-status");
 
-    let btnsContainer = document.createElement("div");
-    btnsContainer.classList.add("btns-container");
+        const statusPara = document.createElement("p");
+        statusPara.classList.add("status");
+        statusPara.textContent = `${book.read}`;
 
-    let readbtn = document.createElement("button");
-    readbtn.classList.add("read");
-    readbtn.classList.add("button-83");
-    if(`${books[i].read}` == "Read") {
-        readbtn.textContent = "Not Read ?"
-    }
-    else {
-        readbtn.textContent = "Read ?"
-    }
+        statusContainer.appendChild(statusPara);
 
-    let removebtn = document.createElement("button");
-    removebtn.classList.add("remove");
-    removebtn.classList.add("button-83");
-    removebtn.textContent = "Remove";
-    
-    btnsContainer.appendChild(readbtn);
-    btnsContainer.appendChild(removebtn);
+        const btnsContainer = document.createElement("div");
+        btnsContainer.classList.add("btns-container");
 
-    container.appendChild(bookContainer);
-    container.appendChild(statusContainer);
-    container.appendChild(btnsContainer)
+        const readbtn = document.createElement("button");
+        readbtn.classList.add("read");
+        readbtn.classList.add("button-83");
+        readbtn.textContent = book.read === "Read" ? "Not Read ?" : "Read ?";
+        
+        const removebtn = document.createElement("button");
+        removebtn.classList.add("remove");
+        removebtn.classList.add("button-83");
+        removebtn.textContent = "Remove";
+        
+        btnsContainer.appendChild(readbtn);
+        btnsContainer.appendChild(removebtn);
 
+        container.appendChild(bookContainer);
+        container.appendChild(statusContainer);
+        container.appendChild(btnsContainer);
 
-    let shelf = document.querySelector(".shelf");
+        shelf.appendChild(container);
 
-    shelf.appendChild(container);
+        readbtn.addEventListener("click", () => {
+            if(readbtn.textContent.includes("Read ?")) {
+                readBook(book);
+                statusPara.textContent = "Read";
+                readbtn.textContent = "Not Read ?";
+            } else {
+                unReadBook(book);
+                statusPara.textContent = "Not Read";
+                readbtn.textContent = "Read ?";
+            }
+        });
 
-    document.body.appendChild(shelf);
-
-    readbtn.addEventListener("click", ()=> {
-        if(readbtn.textContent == "Read ?") {
-            readBook(books[i]);
-            statusPara.textContent = `${books[i].read}`;
-            readbtn.textContent = "Not Read ?";
-        }
-        else {
-            unReadBook(books[i]);
-            statusPara.textContent = `${books[i].read}`;
-            readbtn.textContent = "Read ?";
-        }
+        removebtn.addEventListener("click", () => {
+            removeBook(book);
+            displayBooks(books); // Re-render the updated list
+        });
     });
-
-    removebtn.addEventListener("click", ()=> {
-        shelf.replaceChildren();
-        displayBooks(removeBook(books[i]));
-    });
-
-}
 }
 
 function removeBook(book) {
     let index = books.indexOf(book);
     books.splice(index, 1);
+    saveToLocalStorage();
     return books;
 }
+
 
 function readBook(book) {
     let index = books.indexOf(book);
     books[index].read = "Read";
+    saveToLocalStorage();
     return books;
 }
+
 
 function unReadBook(book) {
     let index = books.indexOf(book);
     books[index].read = "Not Read";
+    saveToLocalStorage();
     return books;
 }
 
